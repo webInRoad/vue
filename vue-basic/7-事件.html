@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件</title>
+  <script src="js/vue.js"></script>
+  <script>
+    /**
+     * 自定义键位别名
+     */
+    Vue.config.keyCodes={
+      a:65,
+      f1:112
+    }
+    window.onload = function(){
+      let vm = new Vue({
+        el:"#app",
+        methods:{
+          show(){
+            console.info("我被点击了")
+          },
+          //事件对象，$event
+          print(e){
+            console.info(e);
+            console.info(this==vm);//true
+            console.info(e.target.innerHTML);//DOM对象
+          },
+          //阻止冒泡两种方式
+          childClick(e){
+            console.info("子节点被点击了");
+            e.stopPropagation();
+          },
+          childVueClick(){
+            console.info("vue子节点被点击了");
+          },
+          parentClick(){
+            console.info("父节点被点击了")
+          },
+          //阻止默认行为的两种方式
+          linkClick(e){
+            console.info("链接被点击了");
+            e.preventDefault();
+          },
+          vueLinkClick(){
+            console.info("vue链接被点击了");
+          },
+          //键盘事件,原生js判断按键类型
+          keyShow(e){
+            console.info(e.keyCode);
+            if(e.keyCode==13){
+              console.info("按了回车");
+            }
+          },
+          //vue方式判断按键类型,用修饰符的方式实现
+          simpleKey(){
+            console.info("按了回车或者向上键再或者f1");
+          },
+          //.once 只会触发一次
+          printOnce(){
+            console.info("只会触发一次")
+          }
+        }
+      })
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <!-- 1.事件简写：v-on:click=>@click -->
+    <input type="button" v-on:click="show" value="点击我">
+    <input type="button" @click="show" value="点击我">
+    <hr style="margin-bottom:60px">
+
+    <!-- 2.事件对象$event，包含事件相关信息，如事件源、事件类型、偏移量
+    target、type、offsetx -->
+    <button @click="print($event)">Click Me</button>
+    <hr style="margin-bottom:60px">
+
+   <!--
+      3.阻止事件冒泡，
+        a)原生js方式，依赖于事件对象($event)，
+        b)vue方式，不依赖于事件对象，直接@click.stop
+   -->
+    <div @click="parentClick">
+      <input type="button" @click="childClick($event)" value="子节点点击">
+      <input type="button" @click.stop="childVueClick" value="vue子节点点击">
+    </div>
+    <hr style="margin-bottom:60px">
+    <!--
+      4.阻止默认行为
+        a)原生js方式，依赖于事件对象($event),e.preventDefault)();
+        b)vue方式，不依赖于事件对象，直接@click.prevent
+    -->
+    <a href="#" @click="linkClick($event)">俺是链接</a>
+    <a href="#" @click.prevent="vueLinkClick">俺是链接</a>
+    <hr style="margin-bottom:60px">
+
+    <!--
+      5.键盘事件,
+        a)键盘事件包括@keydown、@keypress、@keyup
+        b)vue对按键的判断做了修饰符优化，如@keydown.13
+        c)vue可以自定义键位别名
+    -->
+    <!-- 键盘事件：@keydown、@keypress、@keyup -->
+    用户名：<input type="text" @keydown="keyShow($event)">
+    <!-- 简化按键的判断 -->
+    用户名：<input type="text" @keydown.13="simpleKey">
+    用户名：<input type="text" @keydown.enter="simpleKey">
+    用户名：<input type="text" @keydown.up="simpleKey">
+    <!--
+      默认没有@keydown.a/b/c...事件,
+      可以自定义键位别名
+    -->
+    用户名：<input type="text" @keydown.stop.prevent.f1="simpleKey">
+    用户名：<input type="text" @keydown.stop.prevent.112="simpleKey">
+    <hr style="margin-bottom:60px">
+
+    <!--
+      6.只会触发一次的事件修饰符，@click.once
+    -->
+    <button @click.once="printOnce">只会触发一次</button>
+
+    <!--
+      .stop - 调用 event.stopPropagation()。
+      .prevent - 调用 event.preventDefault()。
+      .{keyCode | keyAlias} - 只当事件是从特定键触发时才触发回调。
+      .native - 监听组件根元素的原生事件。
+      .once - 只触发一次回调。
+    -->
+  </div>
+</body>
+</html>

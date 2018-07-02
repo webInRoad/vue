@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>data中各种数据类型以及v-model指令</title>
+  <script src="js/vue.js"></script>
+  <script>
+    window.onload = function(){
+      new Vue({
+        //el:'.app',
+        el:'div',
+        //el:'body',//报错，是由于vue2.0中不允许将vue实例挂载到<html>或<body>元素，在vue1.0中是可以的
+        data:{
+          name:'',//即使没有值，也不能省略，报错
+          msg:'23',
+          age:21,
+          flag:true,
+          nums:[12,4,23,5],
+          user:{id:9527,name:'唐伯虎'}
+        }
+      })
+    }
+  </script>
+</head>
+<body>
+  <div class="app">
+    <input type="text" v-model="name"><br> <!-- 双向数据绑定，一般用于表单元素 -->
+    {{name}}<br>
+    {{msg}}<br>
+    {{age}}<br>
+    {{flag}}<br>
+    {{nums}}<br>
+    {{user}}<br>
+  </div>
+</body>
+</html>

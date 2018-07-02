@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>属性与属性简写</title>
+  <script src="js/vue.js"></script>
+  <script>
+    window.onload = function(){
+      new Vue({
+        el:"#app",
+        data:{
+          url:"https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png",
+          width:"300px",
+          height:"90px",
+          title:"百度图标"
+        }
+      })
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <!-- <img src="{{url}}" alt=""> --> <!-- 会报错 -->
+    <!-- 可以直接访问vue中的数据，不需要使用{{}} -->
+    <img v-bind:src="url" alt="">
+    <!-- 简写形式v-bind:src=>:src -->
+    <img :src="url" :width="width" :height="height" alt="" :title="title">
+  </div>
+</body>
+</html>

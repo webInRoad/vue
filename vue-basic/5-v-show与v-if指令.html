@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>v-show与v-if指令</title>
+  <script src="js/vue.js"></script>
+  <script>
+      window.onload = function(){
+        new Vue({
+          el:"#app",
+          data:{
+            flag:true
+          },
+          methods:{
+            //change(){
+            change:function(){
+              console.info(23)
+              this.flag = !this.flag;
+            }
+          }
+        })
+      }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <input type="button" v-on:click="change" value="更改flag">
+    <!-- 直接将函数体写在后面 -->
+    <input type="button" v-on:click="flag=!flag" value="更改flag2">
+    <!-- v-show指令隐藏是通过设置display来实现的，v-if是会将元素直接从dom树删除 -->
+    <div style="width: 100px;height: 70px;background-color: red;margin-top: 20px;" v-show="flag">欢迎学习vue</div>
+
+    <div style="width: 100px;height: 70px;background-color: red;margin-top: 20px;" v-if="flag">欢迎学习vue</div>
+  </div>
+</body>
+</html>

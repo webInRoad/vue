@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>class与style属性</title>
+  <script src="js/vue.js"></script>
+  <script>
+    window.onload = function(){
+      new Vue({
+        el:"#app",
+        data:{
+          className:"main",
+          className2:"nav",
+          //jsonData:{main:true,nav:this.num<0}//nav中的判断不会生效，数据中不能获取data中的数据
+          jsonData:{main:true,nav:true},
+          //styleData:{font-size:2px;background-color:yellow} //这个错了三处，定义的样式之间要用逗号分隔，还有要用驼峰标识，以及用双引号引起来
+          styleData:{fontSize:"2px",backgroundColor:"yellow"},
+          xx:{fontSize:"2px"},
+          yy:{backgroundColor:"yellow"}
+        }
+      })
+    }
+  </script>
+  <style>
+    .main{
+      background-color: red;
+    }
+    .nav{
+      font-size: 24px;
+      color:blue;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+   <!-- class属性定义 -->
+    <div class="main">原生代码</div><br> <!-- 可以访问，普通css方式 -->
+    <div :class="main">vue方式</div><br><!-- 不可以，Vue的属性绑定时不能直接写css样式 -->
+    <!-- 方式1:变量形式,只限于一个类,如:class="className,className2" 只会前面那个生效 -->
+    <div :class="className,className2">通过变量形式定义class属性</div><br>
+
+    <!-- 方式2:数组形式，可以同时引用多个 -->
+    <div :class="[className,className2]">通过数组形式定义class属性</div><br>
+
+    <!-- 方式3:json形式(常用方式)，json中的key为样式名称，value为true时表示引用该样式，为false则不引用， -->
+    <div :class="{main:true,nav:false}">通过json形式定义class属性</div><br>
+    <div :class="{main:true,nav:num<0}">通过json形式定义class属性</div><br>
+
+    <!-- 方式4：变量引用json形式 -->
+    <div :class="jsonData">通过变量形式(该变量为json格式)定义class属性</div><br>
+
+    <!-- style的属性定义 -->
+    <div :style="styleData">通过变量定义style属性</div><br>
+    <div :style="[xx,yy]">通过数组定义style属性</div>
+  </div>
+</body>
+</html>

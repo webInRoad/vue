@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hello world</title>
+  <script src="js/vue.js"></script>
+  <script>
+    window.onload = function(){
+      //配置是否允许vue-devtools检查代码，方便调试，生产环境中需要设置为false
+      Vue.config.devtools=false;
+      Vue.config.productionTip=false; //阻止vue启动时生成生产消息
+      new Vue({
+        el:'#app',//指定关联的元素
+        data:{//存储数据
+          msg:"hello world"
+        }
+      })
+    }
+  </script>
+</head>
+<body>
+<div id="app">
+  {{msg}} <!-- 两对大括号{{}}称为模板，用来进行数据的绑定显示在页面中 -->
+</div>
+<h5>
+  {{msg}}  <!-- 不在#app Dom元素中，vue无法感知到 -->
+</h5>
+</body>
+</html>

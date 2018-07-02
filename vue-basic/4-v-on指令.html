@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>v-on指令</title>
+  <script src="js/vue.js"></script>
+  <script>
+    window.onload = function(){
+      let vm = new Vue({
+          el:'#app',
+          data:{ //存储数据
+            arr:[2,3,5,3,5]
+          },
+          methods:{ //存储方法
+            show(){
+              console.info("show方法")
+            },
+            add(val){
+              // console.log(this); //this表示当前vue实例
+              // console.log(this===vm); //true
+              this.arr.push(val);//使用this访问当前实例中的成员
+              // this.show();
+            }
+
+          }
+      })
+    }
+  </script>
+</head>
+<body>
+<div id="app">
+  <input type="button" v-on:click="show" value="显示">
+  <input type="button" v-on:click="add(88)" value="添加">
+  <!-- @click等价于v-on:click -->
+  <input type="button" @click="add(88)" value="添加"><br>
+  <ul v-for="(val,key) in arr">
+    <li>{{key}}={{val}}</li>
+  </ul>
+  <hr>
+    <button v-on:mouseover="show">鼠标经过</button>
+    <button v-on:dblclick="show">鼠标双击</button>
+    <button @dblclick="show">鼠标双击</button>
+</div>
+</body>
+</html>
